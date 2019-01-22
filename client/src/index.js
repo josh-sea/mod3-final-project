@@ -2,9 +2,13 @@ document.addEventListener('DOMContentLoaded', function(){
   const gardenSidebar = document.querySelector('#all-gardens');
   const topPlants = document.querySelector('#plant-garden');
   const bottomPlants = document.querySelector('#all-plants');
+
+  //changing global variables
   let allGardens = [];
-  let allTopPlants = []
+  let allTopPlants = [];
   let allPlants = [];
+  let gardenPlants = [];
+  let currentGardenId = 0;
 
 //----------> helpers
   function formatGarden(garden){
@@ -60,12 +64,12 @@ document.addEventListener('DOMContentLoaded', function(){
       container.innerHTML = "";
       if (Object.keys(res).length == 2) {
       allTopPlants = res.plants;
-      allTopPlants.forEach(function(plant){
+      res.plants.forEach(function(plant){
         container.innerHTML += formatPlant(plant)
       })//end of for each
     }else{
       allPlants = res;
-      allPlants.forEach(function(plant){
+      res.forEach(function(plant){
         container.innerHTML += formatPlantAdd(plant)
       })//end of for each
     }
@@ -76,17 +80,47 @@ document.addEventListener('DOMContentLoaded', function(){
         .then(parseJSON)
         .then(res => renderPlants(res, container))
       }
+
+      function deleteTopFetch(id){
+        return fetch(`http://localhost:3000/api/v1/garden_plants/${id}`, {method: "DELETE"})
+                  .then(parseJSON)
+                  .then((r) => {
+                    gardenPlants.splice(gardenPlants.indexOf(r),1)
+                    getPlantsFetch(topPlants, `gardens/${currentGardenId}`)
+                  })//end of then
+      }//end of delete function
+
 //-------------> end of helpers
 // ------------> initial functions
-getGardensFetch()
-getPlantsFetch(topPlants, "gardens/2")
-getPlantsFetch(bottomPlants, "plants")
+  getGardensFetch()
+// getPlantsFetch(topPlants, "gardens/2")
+  getPlantsFetch(bottomPlants, "plants")
 
 //-------------------------> Event Listeners
 
-gardenSidebar.addEventListener("click", function(e){
-  console.log(e.target)
+  gardenSidebar.addEventListener("click", function(e){
+  getPlantsFetch(topPlants, `gardens/${e.target.dataset.gardenId}`)
+  currentGardenId = e.target.dataset.gardenId;
+})//end garden select click Listener
 
-})
+  topPlants.addEventListener('click', function(e){
+    const foundPlant = allTopPlants.find(function(plant){
+        return plant.id == e.target.dataset.deleteId
+    })//end of find
+    fetch('http://localhost:3000/api/v1/garden_plants')
+      .then(parseJSON)
+      .then((r) => {
+        gardenPlants = r;
+        const foundGP = gardenPlants.find((gp) => {
+          return gp.plant_id == foundPlant.id && gp.garden_id == currentGardenId;
+        })
+        deleteTopFetch(foundGP.id)
+        allTopPlants.splice(allTopPlants.indexOf(foundPlant),0)
+        // renderPlants(allTopPlants,topPlants)
+        window.scrollTo(0,0)
+      })//end of then
+
+
+  })//end topplant event listener
 
 })//end of dom content loaded

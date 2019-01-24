@@ -7,24 +7,55 @@
     <link rel="stylesheet" href="style.css">
     <title>Garden Life</title>
   </head>
-  <body
-<div class="container" style="margin-top:15px">
-  <div class="row">
+  <body>
+<div class="container" style="margin-top-bottom:15px;position:relative">
+  <div class="row" >
     <div class="col-12">
-      <h1>this is the title of the thing</h1>
+      <div class="jumbotron jumbotron-fluid text-white" align="center">
+        <h1 class="display-2">Gardens4Life</h1>
+        <p class="lead">Make your virtual garden dreams come true!</p>
+      </div>
     </div>
   </div>
+
   <div class="row">
-    <div class="col-2 border border-success">
-      <ul id="all-gardens" class="list-group">
+    <div align="center" class="col-2" style="position:aboslute">
+      <button id="create-garden" type="button" name="button" class="btn btn-info" style="margin-bottom:10px">Create Garden!</button>
+      <ul style="height:100vh;overflow:scroll" id="all-gardens" class="list-group">
       </ul>
       <!-- <h4>this is the sidebar for gardens</h4> -->
     </div>
-    <div class="col-10">
-      <div id="plant-garden" style="padding-bottom:15px" class="row border border-bottom-0 border-success">
+    <div class="col-10" style="height:100%">
+      <div class="container">
+        <form id="garden-form" class="" action="index.html" method="post" style="display:none">
+          <label for="name-input">Enter Garden Name</label>
+          <input id="name-input" class="form-control" type="text" name="garden-name" value="">
+          <label for="image-input">Image URL:</label>
+          <input id="image-input" class="form-control" type="text" name="garden-image" value="">
+          <div class="form-group">
+            <label for="text-input">Enter Description</label>
+            <textarea class="form-control" id="text-input" rows="3"></textarea>
+          </div>
+          <input type="submit" name="submit" value="submit" class="btn btn-info">
+        </form>
+      </div>
+        <div id="garden-description" class="jumbotron jumbotron-fluid text-white" style="display:none">
+          <img id="garden-show-image" src="" alt="garden-image">
+          <h4 id="garden-show-name" class="display-4">Garden Name</h4>
+          <p id="garden-show-description"class="lead">Garden description</p>
+          <div class="btn-group">
+            <button data-edit-garden="" id="edit-garden" type="button" name="button" class="btn btn-info">Edit</button>
+            <button data-delete-garden="" id="delete-garden" type="button" name="button" class="btn btn-info">Delete</button>
+          </div>
+        </div>
+      <div id="plant-garden" style="padding-left:5%;padding-bottom:15px;height:75%;overflow:scroll" class="row">
         <h4>this is the main area for the plants belonging to a garden</h4>
       </div>
-      <div id="all-plants" style="padding-top:15px" class="row border border-success">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div id="all-plants" style="padding-top:15px;height:45vh;overflow:scroll;position:relative;" class="row">
         <h4>this is the area for all plants not in the current garden</h4>
       </div>
     </div>

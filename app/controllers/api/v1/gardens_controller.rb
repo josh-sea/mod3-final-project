@@ -29,7 +29,7 @@ class Api::V1::GardensController < ApplicationController
   end
 
 
-  def delete
+  def destroy
     @garden = Garden.find(params[:id])
     @garden.destroy
     render json: @garden, status: :ok
@@ -39,7 +39,7 @@ class Api::V1::GardensController < ApplicationController
   private
 
   def garden_params
-    params.require(:garden).permit(:name, :description)
+    params.require(:garden).permit(:name, :description, :image)
   end
 
 

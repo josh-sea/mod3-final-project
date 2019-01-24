@@ -18,6 +18,6 @@ class Api::V1::GardenPlantsController < ApplicationController
 
   private
   def garden_plant_params
-    params.require(:garden_plants).permit(:plant_id, :garden_id)
+    params.require(:garden_plant).permit(:plant_id, :garden_id)
   end
 end #end of garden plants controller

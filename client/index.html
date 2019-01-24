@@ -18,16 +18,16 @@
     </div>
   </div>
 
-  <div class="row">
-    <div align="center" class="col-2" style="position:aboslute">
+  <div class="row" style="background:#e9e9e9;padding:10px">
+    <div align="center" class="col-2" style="position:aboslute;padding:7px">
       <button id="create-garden" type="button" name="button" class="btn btn-info" style="margin-bottom:10px">Create Garden!</button>
       <ul style="height:100vh;overflow:scroll" id="all-gardens" class="list-group">
       </ul>
       <!-- <h4>this is the sidebar for gardens</h4> -->
     </div>
-    <div class="col-10" style="height:100%">
+    <div class="col-10" style="height:100%;background:#f1f1f1:padding:10px">
       <div class="container">
-        <form id="garden-form" class="" action="index.html" method="post" style="display:none">
+        <form id="garden-form" data-toggle-id="" class="" action="index.html" method="post" style="display:none;margin-bottom:2%">
           <label for="name-input">Enter Garden Name</label>
           <input id="name-input" class="form-control" type="text" name="garden-name" value="">
           <label for="image-input">Image URL:</label>
@@ -39,7 +39,7 @@
           <input type="submit" name="submit" value="submit" class="btn btn-info">
         </form>
       </div>
-        <div id="garden-description" class="jumbotron jumbotron-fluid text-white" style="display:none">
+        <div align="center" id="garden-description" class="jumbotron jumbotron-fluid text-white" style="display:none">
           <img id="garden-show-image" src="" alt="garden-image">
           <h4 id="garden-show-name" class="display-4">Garden Name</h4>
           <p id="garden-show-description"class="lead">Garden description</p>
@@ -49,7 +49,6 @@
           </div>
         </div>
       <div id="plant-garden" style="padding-left:5%;padding-bottom:15px;height:75%;overflow:scroll" class="row">
-        <h4>this is the main area for the plants belonging to a garden</h4>
       </div>
     </div>
   </div>

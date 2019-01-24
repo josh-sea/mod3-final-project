@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function(){
         clearInterval(loop)
       }
     }//end unwatered callback
-    let loop = setInterval(unwatered, 5000);
+    let loop = setInterval(unwatered, 15000);
     loop;
 
     const foundGarden = allGardens.find(function(garden){
@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function(){
           deleteTopFetch(foundGP.id)
           allTopPlants.splice(allTopPlants.indexOf(foundPlant),0)
           // renderPlants(allTopPlants,topPlants)
-          window.scrollTo(0,0)
+          // window.scrollTo(0,0)
         })//end of then
     } else if (e.target.dataset.imgId){
       const foundPlant = allTopPlants.find((plant)=>{

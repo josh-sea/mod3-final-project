@@ -37,7 +37,7 @@ end
 private
 
 def plant_params
-  params.require(:plant).permit(:name, :description, :watered, :watering_frquency, :harvested, :harvest_frequency)
+  params.require(:plant).permit(:name, :description, :watered, :watering_frquency, :harvested, :harvest_frequency, :watered_image, :unwatered_image)
 end
 
 

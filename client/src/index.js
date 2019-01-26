@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', function(){
   const gardenShowImage = document.querySelector("#garden-show-image")
   const deleteGarden = document.querySelector("#delete-garden")
   const editGarden = document.querySelector("#edit-garden")
+  const createPlant = document.querySelector('#create-plant');
+  const deadImage = document.querySelector('#dead-image-input');
+  const deadImageLabel = document.querySelector('#dead-image-label');
 //#####################################################################
   let allGardens = [];
   let allTopPlants = [];
@@ -22,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function(){
   let currentGardenId = 0;
   let addGarden = false;
   let seeGarden = false;
+  let waterGame = false;
 //#####################################################################
   function formatGarden(garden){
     return `<li data-garden-id=${garden.id} class="list-group-item list-group-item-action">${garden.name}</li>`
@@ -48,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function(){
 //--------plants
     function formatPlant(plant){
       return `
-      <div style="margin:5px;width:10rem;height:20rem;" align="center" class="card text-black shadow-lg" data-card-id="${plant.id}">
+      <div style="margin:5px;width:10rem;height:25rem;" align="center" class="card text-black shadow-lg" data-card-id="${plant.id}">
           <img data-img-id=${plant.id} src=${plant.watered_image} class="card-img-top" alt="...">
           <div class="card-body" data-cardlocation-id="${plant.id}">
             <h5 class="card-title"> ${plant.name}</h5>
@@ -60,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function(){
 //#####################################################################
   function formatPlantAdd(plant){
     return `
-    <div style="margin:5px;width:10rem;height:20rem;"  align="center" class="card text-black shadow-lg" data-card-id="${plant.id}">
+    <div style="margin:5px;width:10rem;height:25rem;"  align="center" class="card text-black shadow-lg" data-card-id="${plant.id}">
         <img src=${plant.watered_image} class="card-img-top bottom" alt="...">
         <div class="card-body" data-cardlocation-id="${plant.id}">
           <h5 class="card-title"> ${plant.name}</h5>
@@ -167,8 +171,30 @@ document.addEventListener('DOMContentLoaded', function(){
         gardenForm.reset();
         addGarden = false;
         gardenForm.style.display = "none";
-      })//end of edit
-    }
+      })//end of then
+      //end of else if edit
+    } else if (gardenForm.dataset.toggleId == 2){
+      fetch('http://localhost:3000/api/v1/plants',{
+        method: "POST",
+        headers:
+        {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          name: nameInput.value,
+          description: textInput.value,
+          watered_image: imageInput.value,
+          unwatered_image: deadImage.value
+        })
+      })//end of fetch
+      .then(parseJSON)
+      .then(r => {
+        allPlants.push(r);
+        renderPlants(allPlants, bottomPlants);
+        gardenForm.reset();
+      })//end of then
+    }//end of new plant
   })//end of submit event listener
 //#####################################################################
   createGarden.addEventListener('click', function(e){
@@ -179,6 +205,8 @@ document.addEventListener('DOMContentLoaded', function(){
       gardenForm.style.display = "block"
       topPlants.innerHTML = '';
     } else {
+      deadImage.type = "hidden";
+      deadImageLabel.style.display = "none"
       gardenForm.style.display = "none"
     }
 
@@ -210,12 +238,12 @@ document.addEventListener('DOMContentLoaded', function(){
         randPlant.children[0].src = foundPlant.unwatered_image;
       }
       counter++
-      if (counter === 10){
+      if (counter === 5){
         clearInterval(loop)
       }
     }//end unwatered callback
-    let loop = setInterval(unwatered, 10000);
-    loop;
+    let loop = setInterval(unwatered, 7000);
+
 
     const foundGarden = allGardens.find(function(garden){
       return garden.id == currentGardenId
@@ -294,7 +322,7 @@ document.addEventListener('DOMContentLoaded', function(){
         })
         // window.scrollTo(0,0)
       }
-      else {console.log('did not hit the API')}
+      else {alert('That plant is already in your garden!')}
     }
   })//end of bottom event listener
 //#####################################################################
@@ -316,6 +344,8 @@ document.addEventListener('DOMContentLoaded', function(){
       gardenForm.dataset.toggleId = 1;
       addGarden = !addGarden
       if(addGarden){
+        deadImage.type = "hidden";
+        deadImageLabel.style.display = "none"
         gardenForm.style.display = "block"
         const foundGarden = allGardens.find((garden)=>{
             return garden.id == currentGardenId;
@@ -335,7 +365,24 @@ document.addEventListener('DOMContentLoaded', function(){
   })
 
 //#####################################################################
+createPlant.addEventListener('click', function(e){
+  gardenForm.dataset.toggleId = 2;
+  gardenForm.reset()
+  addGarden = !addGarden
+  if(addGarden){
+    gardenForm.style.display = "block"
+    topPlants.innerHTML = '';
+    deadImage.type = "text";
+    deadImageLabel.style.display = "block"
+  } else {
+    deadImage.type = "hidden";
+    deadImageLabel.style.display = "none"
+    gardenForm.style.display = "none"
+    gardenForm.dataset.toggleId = '';
+  }
 
-
+  gardenDescription.style.display = "none"
+})//end of create listener
+//#####################################################################
 })//end of dom content loaded
 //#####################################################################

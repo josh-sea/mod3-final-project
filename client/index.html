@@ -22,7 +22,8 @@
   <div class="row" style="background:#e9e9e9;padding:10px">
 <!-- create button -->
     <div align="center" class="col-2" style="position:aboslute;padding:7px">
-      <button id="create-garden" type="button" name="button" class="btn btn-info" style="margin-bottom:10px">Create Garden!</button>
+      <button id="create-plant" type="button" class="btn btn-info" style="margin-bottom:3%;width:100%">Create Plant</button>
+      <button id="create-garden" type="button" name="button" class="btn btn-info" style="margin-bottom:10px;width:100%">Create Garden!</button>
       <ul style="height:100vh;overflow:scroll" id="all-gardens" class="list-group">
       </ul>
 <!-- <h4>this is the sidebar for gardens</h4> -->
@@ -31,10 +32,12 @@
 <!-- new/edit form -->
       <div class="container">
         <form id="garden-form" data-toggle-id="" class="" action="index.html" method="post" style="display:none;margin-bottom:2%">
-          <label for="name-input">Enter Garden Name</label>
+          <label for="name-input">Enter  Name</label>
           <input id="name-input" class="form-control" type="text" name="garden-name" value="">
           <label for="image-input">Image URL:</label>
           <input id="image-input" class="form-control" type="text" name="garden-image" value="">
+          <label id="dead-image-label" for="dead-image-input" style="display:none">Add a dead image</label>
+          <input id="dead-image-input" class="form-control" type="hidden" name="garden-image" value="">
           <div class="form-group">
             <label for="text-input">Enter Description</label>
             <textarea class="form-control" id="text-input" rows="3"></textarea>
@@ -44,12 +47,16 @@
       </div>
 <!-- description box for a garden  -->
         <div align="center" id="garden-description" class="jumbotron jumbotron-fluid text-white" style="display:none">
-          <img id="garden-show-image" src="" alt="garden-image">
+          <img id="garden-show-image" src="" alt="You didn't upload a picture!">
           <h4 id="garden-show-name" class="display-4">Garden Name</h4>
           <p id="garden-show-description"class="lead">Garden description</p>
           <div class="btn-group">
             <button data-edit-garden="" id="edit-garden" type="button" name="button" class="btn btn-info">Edit</button>
             <button data-delete-garden="" id="delete-garden" type="button" name="button" class="btn btn-info">Delete</button>
+            <!-- <button id="start-game" type="button" name="button" class="btn btn-info">Watering Game</button> -->
+            <!-- <form action="index.html" method="post">
+              <input type="range" name="timer" min="0" max="10" value="5">
+            </form> -->
           </div>
         </div>
 <!-- div for rendering plant cards on top belonging to selected garden -->
@@ -60,7 +67,7 @@
 <!-- div for all plant cards display -->
   <div class="row">
     <div class="col-12">
-      <div id="all-plants" style="padding-top:15px;height:45vh;overflow:scroll;position:relative;" class="row">
+      <div id="all-plants" style="padding-top:15px;margin-left:5%;height:45vh;overflow:scroll;position:relative;" class="row">
         <h4>this is the area for all plants not in the current garden</h4>
       </div>
     </div>
